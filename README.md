@@ -19,7 +19,7 @@ A lightweight Roblox animation manager that supports dynamic loading, unloading,
 Add the package to your `wally.toml`:
 
 ```toml
-AnimationManager = "grunion/animationmanager@1.0.0"
+AnimationManager = "grunion/animationmanager@version"
 ```
 
 Then install your dependencies:
