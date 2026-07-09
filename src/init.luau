@@ -86,9 +86,9 @@ type ManagerType = typeof(setmetatable({} :: ManagerData, AnimationManager))
 
 export type Manager = ManagerType
 
-local localPlayerManager: ManagerType? = nil
+local localPlayerManager: Manager? = nil
 
-function AnimationManager.new(char: Model)
+function AnimationManager.new(char: Model): Manager
 	local self = setmetatable({} :: ManagerData, AnimationManager)
 	-->> Player/Character
 	self._Player = Players:GetPlayerFromCharacter(char)
@@ -119,14 +119,14 @@ function AnimationManager.new(char: Model)
 	end
 	self:LoadCore()
 
-    self._AliveTrove:Add(function()
+	self._AliveTrove:Add(function()
 		if localPlayerManager == self then
 			localPlayerManager = nil
 		end
 		self:Destroy()
-    end)
+	end)
 
-    self._AliveTrove:BindToInstance(self._Character)
+	self._AliveTrove:BindToInstance(self._Character)
 
 	return self :: ManagerType
 end
