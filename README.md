@@ -39,6 +39,16 @@ manager:LoadAnimations("Combat")
 manager:Play("Idle")
 ```
 
+## Remote Animation Events
+
+This package uses a remote named `AnimationEvent` so the server can tell a client to play or stop specific animations.
+
+This is mainly useful for PvP/server-authoritative combat. For example, if the server detects that a player was stunned, it can tell that player’s client to play the stun animation without requiring animation managers to also exist on the server.
+
+This keeps animation tracks client-sided and avoids forcing the server to load animations it does not need.
+
+The animation event NEEDS to be made before this can function, all you need to do is either use networker on the server to make it quickly or just manually make the remote in studio itself.
+
 ## API
 
 ### Constructor
