@@ -4,7 +4,7 @@ description = "A lightweight Roblox animation manager for Wally that handles loa
 Authors = ["Grunion"]
 license = "MIT"
 exclude = ["sourcemap.json"]
-version = "1.0.2"
+version = "1.0.3"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 
