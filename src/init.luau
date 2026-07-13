@@ -18,7 +18,7 @@
 		============ LOADING ============
 		:LoadCore()                              -- Loads all animations under the "Core" set. Called automatically on construction.
 		:LoadAnimations(setName)                 -- Loads a named animation set, unloading the previous one. Fires SetChanged.
-		:LoadIndividualAnimation(name)           -- Loads a single animation from AnimationList.Individual into IndividualTracks.
+		:LoadIndividualAnimation(name)           -- Loads a single animation from AnimationList.IndividualTracks.
 		:Preload()                               -- Preloads all animations in ReplicatedStorage.Animations via ContentProvider.
 
 		============ PLAYBACK ============
@@ -54,7 +54,7 @@ local Players = game:GetService("Players")
 local ContentProvider = game:GetService("ContentProvider")
 
 local Animations = ReplicatedStorage:WaitForChild("Animations")
-local Packages = script.Parent.Parent
+local Packages = script.Parent
 
 local Networker = require(Packages.Networker)
 local Trove = require(Packages.Trove)
@@ -155,7 +155,7 @@ function AnimationManager:BindRemote()
 	self._AliveTrove:Add(Networker.new("AnimationEvent"):OnClientEvent(function(data)
 		local animName = data.animName
 		if data.start then
-			if not self:IsIndividualLoaded(animName) and AnimationList.Individual[animName] then
+			if not self:IsIndividualLoaded(animName) and AnimationList.IndividualTracks[animName] then
 				self:LoadIndividualAnimation(animName)
 			end
 
@@ -169,7 +169,7 @@ end
 
 function AnimationManager:LoadCore()
 	self._CoreTracks = {}
-	for i, v in pairs(AnimationList.Core) do
+	for i, v in pairs(AnimationList.CoreTracks) do
 		self._CoreTracks[i] = self._Animator:LoadAnimation(v)
 	end
 end
@@ -242,7 +242,7 @@ function AnimationManager:IsIndividualLoaded(name: string): boolean
 end
 
 function AnimationManager:LoadIndividualAnimation(name: string)
-	local animation = AnimationList.Individual[name]
+	local animation = AnimationList.IndividualTracks[name]
 	if not animation then
 		return
 	end
