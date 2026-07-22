@@ -126,7 +126,7 @@ function AnimationManager.new(char: Model): Manager
 		self:Destroy()
 	end)
 
-	self._AliveTrove:BindToInstance(self._Character)
+	self._AliveTrove:AttachToInstance(self._Character)
 
 	return self :: ManagerType
 end
