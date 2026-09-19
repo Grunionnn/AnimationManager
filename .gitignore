@@ -6,6 +6,7 @@
 /*.rbxl.lock
 
 sourcemap.json
-wally.toml
+wally.lock
 Packages/
 sourcemap.json
+dev.project.json
