@@ -309,31 +309,11 @@ function AnimationManager.PlayAnimation(self: AnimationManager, name: string, fa
 	track:Play(fadeTime)
 end
 
-function AnimationManager.PlayIndividualAnimation(self: AnimationManager, name: string, fadeTime: number?)
-	local track: AnimationTrack = self._individualTracks[name] or self:LoadIndividualTrack(name)
-	if not track then
-		warn("[AnimationManager]: Individual animation " .. name .. " not found in AnimationList")
-		return
-	end
-
-	track:Play(fadeTime)
-end
-
 --// Stopping Animations
 function AnimationManager.StopAnimation(self: AnimationManager, name: string, fadeTime: number?)
 	local track: AnimationTrack = self._individualTracks[name] or self._tracks[name] or self._coreTracks[name]
 	if not track then
 		warn("[AnimationManager]: Animation " .. name .. " not loaded")
-		return
-	end
-
-	track:Stop(fadeTime)
-end
-
-function AnimationManager.StopIndividualAnimation(self: AnimationManager, name: string, fadeTime: number?)
-	local track: AnimationTrack = self._individualTracks[name]
-	if not track then
-		warn("[AnimationManager]: Individual animation " .. name .. " not found in AnimationList")
 		return
 	end
 
@@ -396,14 +376,6 @@ end
 
 function AnimationManager.GetLength(self: AnimationManager, name: string): number?
 	local track: AnimationTrack = self._individualTracks[name] or self._tracks[name] or self._coreTracks[name]
-	if not track then
-		return nil
-	end
-	return track.Length
-end
-
-function AnimationManager.GetIndividualLength(self: AnimationManager, name: string): number?
-	local track: AnimationTrack = self._individualTracks[name]
 	if not track then
 		return nil
 	end
