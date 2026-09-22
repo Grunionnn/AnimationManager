@@ -9,8 +9,8 @@ local GoodSignal = require(Packages.goodsignal)
 local Trove = require(Packages.trove)
 local Networker = require(Packages.networker)
 
-if RunService:IsServer() then 
-    Networker.new("AnimationEvent", "RemoteEvent", "Reliable")
+if RunService:IsServer() then
+	Networker.new("AnimationEvent", "RemoteEvent", "Reliable")
 end
 
 local AnimationManager = {}
@@ -40,7 +40,7 @@ export type AnimationManagerData = {
 	_humanoid: Humanoid,
 	_animator: Animator | AnimationController,
 	_animationList: AnimationListTemplate,
-    _animationFolder: Folder,
+	_animationFolder: Folder,
 
 	_coreTracks: { [string]: AnimationTrack },
 	_tracks: { [string]: AnimationTrack },
@@ -65,10 +65,8 @@ function AnimationManager.new(
 	assert(
 		char
 			and (
-				char:FindFirstChildWhichIsA("Animator", true) or char:FindFirstChildWhichIsA(
-					"AnimationController",
-					true
-				)
+				char:FindFirstChildWhichIsA("Animator", true)
+				or char:FindFirstChildWhichIsA("AnimationController", true)
 			),
 		"[AnimationManager]: char must have an Animator or AnimationController"
 	)
@@ -125,7 +123,7 @@ function AnimationManager.new(
 	return self
 end
 
---// Connections 
+--// Connections
 function AnimationManager.BindRemote(self: AnimationManager)
 	if RunService:IsClient() and self._player then
 		self._aliveTrove:Add(Networker.new("AnimationEvent"):OnClientEvent(function(data)
@@ -148,11 +146,7 @@ function AnimationManager.OnSetChanged(self: AnimationManager, callback: (string
 	return self._aliveTrove:Add(self._setChanged:Connect(callback), "Disconnect")
 end
 
-function AnimationManager.OnTrackStopped(
-	self: AnimationManager,
-	name: string,
-	callback: () -> ()
-): RBXScriptConnection?
+function AnimationManager.OnTrackStopped(self: AnimationManager, name: string, callback: () -> ()): RBXScriptConnection?
 	local track: AnimationTrack = self._individualTracks[name] or self._tracks[name] or self._coreTracks[name]
 	if not track then
 		return nil
@@ -347,20 +341,35 @@ end
 
 --// Information Getters
 function AnimationManager.GetCurrentSet(self: AnimationManager): string?
-    return self._currentSet
+	return self._currentSet
 end
 
 function AnimationManager.IsIndividualLoaded(self: AnimationManager, animation: string): boolean
-    return self._individualTracks[animation] ~= nil
+	return self._individualTracks[animation] ~= nil
 end
 
 function AnimationManager.IsSet(self: AnimationManager, setName: string): boolean
 	return self._currentSet == setName
 end
 
-function AnimationManager.GetLoadedTracks(
-	self: AnimationManager
-): ({ AnimationTrack }, { [string]: AnimationTrack }, { [string]: AnimationTrack }, { [string]: AnimationTrack })
+function AnimationManager.IsPlaying(self: AnimationManager, animation: string): boolean
+	local track = self._individualTracks[animation] or self._tracks[animation] or self._coreTracks[animation]
+
+	if not track then
+		return false
+	end
+
+	local playingTracks = self._animator:GetPlayingAnimationTracks()
+
+	return table.find(playingTracks, track) ~= nil
+end
+
+function AnimationManager.GetLoadedTracks(self: AnimationManager): (
+	{ AnimationTrack },
+	{ [string]: AnimationTrack },
+	{ [string]: AnimationTrack },
+	{ [string]: AnimationTrack }
+)
 	local tracks: { AnimationTrack } = {}
 	for _, v in pairs(self._coreTracks) do
 		table.insert(tracks, v)
