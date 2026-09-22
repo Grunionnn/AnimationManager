@@ -293,7 +293,7 @@ function AnimationManager.UnloadIndividualTracks(self: AnimationManager)
 end
 
 --// Playing Animations
-function AnimationManager.PlayAnimation(self: AnimationManager, name: string, fadeTime: number?)
+function AnimationManager.Play(self: AnimationManager, name: string, fadeTime: number?)
 	local track: AnimationTrack = self._individualTracks[name] or self._tracks[name] or self._coreTracks[name]
 	if not track then
 		warn("[AnimationManager]: Animation " .. name .. " not loaded")
@@ -304,7 +304,7 @@ function AnimationManager.PlayAnimation(self: AnimationManager, name: string, fa
 end
 
 --// Stopping Animations
-function AnimationManager.StopAnimation(self: AnimationManager, name: string, fadeTime: number?)
+function AnimationManager.Stop(self: AnimationManager, name: string, fadeTime: number?)
 	local track: AnimationTrack = self._individualTracks[name] or self._tracks[name] or self._coreTracks[name]
 	if not track then
 		warn("[AnimationManager]: Animation " .. name .. " not loaded")
