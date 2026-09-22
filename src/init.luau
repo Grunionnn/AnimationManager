@@ -1,13 +1,13 @@
 --!strict
-const ContentProvider = game:GetService("ContentProvider")
-const Players = game:GetService("Players")
-const RunService = game:GetService("RunService")
+local ContentProvider = game:GetService("ContentProvider")
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 
-const Packages = script.Parent
+local Packages = script.Parent
 
-const GoodSignal = require(Packages.goodsignal)
-const Trove = require(Packages.trove)
-const Networker = require(Packages.networker)
+local GoodSignal = require(Packages.goodsignal)
+local Trove = require(Packages.trove)
+local Networker = require(Packages.networker)
 
 if RunService:IsServer() then 
     Networker.new("AnimationEvent", "RemoteEvent", "Reliable")
@@ -16,7 +16,7 @@ end
 local AnimationManager = {}
 AnimationManager.__index = AnimationManager
 
-const DEBUG = true
+local DEBUG = true
 
 type SetChangedSignal = GoodSignal.Signal<string?> & {
 	DisconnectAll: (self: SetChangedSignal) -> (),
@@ -204,7 +204,7 @@ function AnimationManager.LoadCore(self: AnimationManager)
 	self:UnloadCoreTracks()
 
 	for i, v in pairs(self._animationList["Core"]) do
-		const t = self._animator:LoadAnimation(v)
+		local t = self._animator:LoadAnimation(v)
 		self._coreTracks[i] = t
 	end
 
@@ -222,7 +222,7 @@ function AnimationManager.LoadIndividualTrack(self: AnimationManager, name: stri
 		return self._individualTracks[name]
 	end
 
-	const t = self._animator:LoadAnimation(self._animationList["Individual"][name])
+	local t = self._animator:LoadAnimation(self._animationList["Individual"][name])
 	self._individualTracks[name] = t
 
 	if DEBUG then
@@ -244,7 +244,7 @@ function AnimationManager.LoadSet(self: AnimationManager, setName: string)
 
 	self._currentSet = setName
 	for i, v in pairs(self._animationList[setName]) do
-		const t = self._animator:LoadAnimation(v)
+		local t = self._animator:LoadAnimation(v)
 		self._tracks[i] = t
 	end
 	if previousSet ~= setName then
