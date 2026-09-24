@@ -38,7 +38,7 @@ export type AnimationManagerData = {
 	_player: Player?,
 	_char: Model,
 	_humanoid: Humanoid,
-	_animator: Animator | AnimationController,
+	_animator: Animator,
 	_animationList: AnimationListTemplate,
 	_animationFolder: Folder,
 
@@ -77,9 +77,8 @@ function AnimationManager.new(
 	-->> Player and Character References
 	self._player = Players:GetPlayerFromCharacter(char)
 	self._char = char
-	self._humanoid = char:FindFirstChildWhichIsA("Humanoid")
-	self._animator = char:FindFirstChildWhichIsA("Animator", true)
-		or char:FindFirstChildWhichIsA("AnimationController", true)
+	self._humanoid = char:WaitForChild("Humanoid") :: Humanoid
+	self._animator = self._humanoid:WaitForChild("Animator") :: Animator
 	self._animationList = AnimationList
 	self._animationFolder = AnimationFolder
 
