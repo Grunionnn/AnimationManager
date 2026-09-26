@@ -61,13 +61,9 @@ function AnimationManager.new(
 	AnimationFolder: Folder
 ): AnimationManager
 	assert(char and char:IsA("Model"), "[AnimationManager]: char must be a Model")
-	assert(char and char:FindFirstChildWhichIsA("Humanoid"), "[AnimationManager]: char must have a Humanoid")
+	assert(char and char:WaitForChild("Humanoid"), "[AnimationManager]: char must have a Humanoid")
 	assert(
-		char
-			and (
-				char:FindFirstChildWhichIsA("Animator", true)
-				or char:FindFirstChildWhichIsA("AnimationController", true)
-			),
+		char and char:WaitForChild("Animator"),
 		"[AnimationManager]: char must have an Animator or AnimationController"
 	)
 	assert(AnimationList and type(AnimationList) == "table", "[AnimationManager]: AnimationList must be a table")
