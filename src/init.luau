@@ -62,10 +62,6 @@ function AnimationManager.new(
 ): AnimationManager
 	assert(char and char:IsA("Model"), "[AnimationManager]: char must be a Model")
 	assert(char and char:WaitForChild("Humanoid"), "[AnimationManager]: char must have a Humanoid")
-	assert(
-		char and char:WaitForChild("Animator"),
-		"[AnimationManager]: char must have an Animator or AnimationController"
-	)
 	assert(AnimationList and type(AnimationList) == "table", "[AnimationManager]: AnimationList must be a table")
 	assert(AnimationFolder and AnimationFolder:IsA("Folder"), "[AnimationManager]: AnimationFolder must be a Folder")
 	local self = setmetatable({} :: AnimationManagerData, AnimationManager) :: AnimationManager
